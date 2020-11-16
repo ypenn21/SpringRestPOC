@@ -1,0 +1,115 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    app: springrestpoc
+    deploymentconfig: springrestpoc
+  strategy:
+    activeDeadlineSeconds: 21600
+    recreateParams:
+      timeoutSeconds: 600
+    resources: {}
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: springrestpoc
+        deploymentconfig: springrestpoc
+    spec:
+      containers:
+        - imagePullPolicy: Always
+          name: springrestpoc
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          resources:
+            limits:
+              memory: 1000Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /opt/keystore
+              name: volume-keystore
+              readOnly: true
+          env:
+            - name: jdbcHost
+              valueFrom:
+                secretKeyRef:
+                  key: jdbcHost
+                  name: springrestpoc-secret
+            - name: jdbcPort
+              valueFrom:
+                secretKeyRef:
+                  key: jdbcPort
+                  name: springrestpoc-secret
+            - name: jdbcDatabase
+              valueFrom:
+                secretKeyRef:
+                  key: jdbcDatabase
+                  name: springrestpoc-secret
+            - name: jdbcUsername
+              valueFrom:
+                secretKeyRef:
+                  key: jdbcUsername
+                  name: springrestpoc-secret
+            - name: jdbcPassword
+              valueFrom:
+                secretKeyRef:
+                  key: jdbcPassword
+                  name: springrestpoc-secret
+            - name: sslAlias
+              valueFrom:
+                secretKeyRef:
+                  key: sslAlias
+                  name: springrestpoc-secret
+            - name: sslJksPassword
+              valueFrom:
+                secretKeyRef:
+                  key: sslJksPassword
+                  name: springrestpoc-secret
+            - name: sslJksPath
+              valueFrom:
+                secretKeyRef:
+                  key: sslJksPath
+                  name: springrestpoc-secret
+            - name: sslKeystorePath
+              valueFrom:
+                secretKeyRef:
+                  key: sslKeystorePath
+                  name: springrestpoc-secret
+            - name: siteHostName
+              value: "{{SPRINGRESTPOC_SITE_HOST_NAME}}"
+            - name: sitePort
+              value: "{{SPRINGRESTPOC_SITE_PORT}}"
+            - name: siteBaseUrl
+              value: "{{SPRINGRESTPOC_SITE_BASE_URL}}"
+            - name: staticBaseUrl
+              value: "{{SPRINGRESTPOC_STATIC_BASE_URL}}"
+            - name: siteZone
+              value: "{{SPRINGRESTPOC_SITE_ZONE}}"
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - name: volume-keystore
+          secret:
+            defaultMode: 420
+            secretName: springrestpoc-keystore
+  test: false
+  triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - springrestpoc
+        from:
+          kind: ImageStreamTag
+          name: 'springrestpoc:latest'
+          namespace: {{SPRINGRESTPOC_NAMESPACE}}
+      type: ImageChange
+    - type: ConfigChange
+

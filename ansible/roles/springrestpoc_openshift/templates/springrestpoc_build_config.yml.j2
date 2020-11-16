@@ -1,0 +1,35 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+spec:
+  failedBuildsHistoryLimit: 5
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'springrestpoc:latest'
+  postCommit: {}
+  resources:
+    limits:
+      memory: 1Gi
+  runPolicy: Serial
+  source:
+    git:
+      uri: 'https://github.com/ypenn21/SpringRestPOC.git'
+    secrets:
+      - destinationDir: /opt/keystore
+        secret:
+          name: springrestpoc-keystore
+    type: Git
+  strategy:
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: 'java:latest'
+        namespace: openshift
+    type: Source
+  successfulBuildsHistoryLimit: 5
+  triggers:
+    - imageChange:
+      type: ImageChange
+    - type: ConfigChange
+

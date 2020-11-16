@@ -1,0 +1,55 @@
+---
+- name: Install springrestpoc image stream on OpenShift
+  k8s: 
+    validate_certs: false
+    state: present
+    name: springrestpoc
+    host: "{{SPRINGRESTPOC_HOST}}"
+    api_key: "{{SPRINGRESTPOC_TOKEN}}"
+    namespace: "{{SPRINGRESTPOC_NAMESPACE}}"
+    definition: "{{ lookup('template', 'springrestpoc_image_stream.yml.j2') }}"
+- name: Install springrestpoc secret on OpenShift
+  k8s: 
+    validate_certs: false
+    state: present
+    name: springrestpoc-secret
+    host: "{{SPRINGRESTPOC_HOST}}"
+    api_key: "{{SPRINGRESTPOC_TOKEN}}"
+    namespace: "{{SPRINGRESTPOC_NAMESPACE}}"
+    definition: "{{ lookup('template', 'springrestpoc_secret.j2') }}"
+- name: Install springrestpoc build config on OpenShift
+  k8s: 
+    validate_certs: false
+    state: present
+    name: springrestpoc
+    host: "{{SPRINGRESTPOC_HOST}}"
+    api_key: "{{SPRINGRESTPOC_TOKEN}}"
+    namespace: "{{SPRINGRESTPOC_NAMESPACE}}"
+    definition: "{{ lookup('template', 'springrestpoc_build_config.yml.j2') }}"
+- name: Install springrestpoc deployment config on OpenShift
+  k8s: 
+    validate_certs: false
+    state: present
+    name: springrestpoc
+    host: "{{SPRINGRESTPOC_HOST}}"
+    api_key: "{{SPRINGRESTPOC_TOKEN}}"
+    namespace: "{{SPRINGRESTPOC_NAMESPACE}}"
+    definition: "{{ lookup('template', 'springrestpoc_deployment_config.yml.j2') }}"
+- name: Install springrestpoc service on OpenShift
+  k8s: 
+    validate_certs: false
+    state: present
+    name: springrestpoc
+    host: "{{SPRINGRESTPOC_HOST}}"
+    api_key: "{{SPRINGRESTPOC_TOKEN}}"
+    namespace: "{{SPRINGRESTPOC_NAMESPACE}}"
+    definition: "{{ lookup('template', 'springrestpoc_service.yml.j2') }}"
+- name: Install springrestpoc route on OpenShift
+  k8s: 
+    validate_certs: false
+    state: present
+    name: springrestpoc
+    host: "{{SPRINGRESTPOC_HOST}}"
+    api_key: "{{SPRINGRESTPOC_TOKEN}}"
+    namespace: "{{SPRINGRESTPOC_NAMESPACE}}"
+    definition: "{{ lookup('template', 'springrestpoc_route.yml.j2') }}"

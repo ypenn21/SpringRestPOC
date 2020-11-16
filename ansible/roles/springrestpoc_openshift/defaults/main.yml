@@ -1,0 +1,99 @@
+
+####################
+# Certbot defaults #
+####################
+
+CERTBOT_DOMAIN_NAME: "..."
+
+######################
+# OpenShift defaults #
+######################
+
+# The OpenShift base URL where applications will be deployed. 
+REDHAT_OPENSHIFT_HOST: https://api.pro-us-east-1.openshift.com
+# The OpenShift secret token to grant access to OpenShift (https://api.pro-us-east-1.openshift.com/oauth/token/request). 
+REDHAT_OPENSHIFT_TOKEN: "..."
+# The OpenShift namespace where applications will be deployed. 
+REDHAT_OPENSHIFT_NAMESPACE: "mynamespace"
+
+#######################
+# PostgreSQL defaults #
+#######################
+
+# The default port that PostgreSQL runs. 
+POSTGRES_PORT: 5432
+# The PostgreSQL OpenShift base URL where PostgreSQL will be deployed. 
+POSTGRES_HOST: "{{REDHAT_OPENSHIFT_HOST}}"
+# The PostgreSQL OpenShift secret token to grant access to OpenShift (https://api.pro-us-east-1.openshift.com/oauth/token/request). 
+POSTGRES_TOKEN: "{{REDHAT_OPENSHIFT_TOKEN}}"
+# The PostgreSQL OpenShift namespace where PostgreSQL be deployed. 
+POSTGRES_NAMESPACE: "{{REDHAT_OPENSHIFT_NAMESPACE}}"
+# The PostgreSQL volume size for Solr files. 
+POSTGRES_VOLUME_SIZE: 1Gi
+# The default hostname for the PostreSQL database. 
+POSTGRES_HOST_NAME: "postgres.{{POSTGRES_NAMESPACE}}.svc"
+# The default username for the PostreSQL database. 
+POSTGRES_DB_USER: computate
+# The default PostgreSQL database name. 
+POSTGRES_DB_NAME: springrestpoc
+# The default PostgreSQL database password. 
+POSTGRES_DB_PASSWORD: "..."
+
+#####################################
+# springrestpoc global defaults #
+#####################################
+
+# The springrestpoc OpenShift base URL where springrestpoc will be deployed. 
+SPRINGRESTPOC_HOST: "{{ REDHAT_OPENSHIFT_HOST }}"
+# The springrestpoc OpenShift secret token to grant access to OpenShift (https://api.pro-us-east-1.openshift.com/oauth/token/request). 
+SPRINGRESTPOC_TOKEN: "{{ REDHAT_OPENSHIFT_TOKEN }}"
+# The springrestpoc OpenShift namespace where springrestpoc be deployed. 
+SPRINGRESTPOC_NAMESPACE: "{{ REDHAT_OPENSHIFT_NAMESPACE }}"
+# The base URL where the static files will point to.  
+SPRINGRESTPOC_STATIC_BASE_URL: "https://example.neocities.org"
+
+#########################################
+# springrestpoc US English defaults #
+#########################################
+
+# The domain name of the site. 
+SPRINGRESTPOC_DOMAIN_NAME: "example.com"
+# The host name of the site. 
+SPRINGRESTPOC_SITE_HOST_NAME: "springrestpoc-dev.{{SPRINGRESTPOC_DOMAIN_NAME}}"
+# The port of the site. 
+SPRINGRESTPOC_SITE_PORT: "10581"
+# The base URL of the site. 
+SPRINGRESTPOC_SITE_BASE_URL: "https://{{SPRINGRESTPOC_SITE_HOST_NAME}}:{{SPRINGRESTPOC_SITE_PORT}}"
+# The timezone of the site. 
+SPRINGRESTPOC_SITE_ZONE: "America/Denver"
+# The PostgreSQL database host name of the site. 
+SPRINGRESTPOC_DB_HOST_NAME: "localhost"
+# The PostgreSQL database user name of the site. 
+SPRINGRESTPOC_DB_USER: computate
+# The PostgreSQL database password of the site. 
+SPRINGRESTPOC_DB_PASSWORD: "..."
+# The PostgreSQL database name of the site. 
+SPRINGRESTPOC_DB_NAME: springrestpoc
+# The backup directory of the site. 
+SPRINGRESTPOC_BACKUP_DIR: /usr/local/src/springrestpoc-static/data/enUS
+# The restore directory of the site. 
+SPRINGRESTPOC_RESTORE_DIR: /home/ctate/backup/springrestpoc-dev/enUS
+
+####################
+# Ansible defaults #
+####################
+
+# Add to an ansible-vault the username of your user on your computer (echo $HOSTNAME). 
+USER_NAME: "..."
+# Add to an ansible-vault the password of your user on your computer to become root for configuring the applications. 
+USER_PASSWORD: "..."
+# Setup the ansible user when running the playbook as your user. 
+ansible_user: "{{USER_NAME}}"
+# Setup the ansible sudo password as your password when running the playbook. 
+ansible_sudo_pass: "{{USER_PASSWORD}}"
+# Setup the ansible password for elevated privileges as your password when running the playbook. 
+ansible_become_pass: "{{USER_PASSWORD}}"
+# Setup the ansible password for ssh as your password when running the playbook. 
+ansible_ssh_pass: "{{USER_PASSWORD}}"
+# Setup the decryption password for decrypting other secrets in the playbook. 
+VAULT_PASSWORD: "{{USER_PASSWORD}}"

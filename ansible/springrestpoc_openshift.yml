@@ -1,0 +1,8 @@
+---
+- name: Install the springrestpoc pod on OpenShift
+  hosts: springrestpoc_openshift
+  vars_files: 
+    - "vaults/{{ VAULT_ID }}/vault"
+  roles: 
+    - springrestpoc_openshift
+
