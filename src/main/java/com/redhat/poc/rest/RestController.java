@@ -44,7 +44,7 @@ public class RestController {
 	}
 
 	@DeleteMapping("/hats/{hatId}")
-	public ResponseEntity<?> updateHat(@PathVariable("hatId") Integer  hatId) {
+	public ResponseEntity<?> deleteHat(@PathVariable("hatId") Integer  hatId) {
 		return new ResponseEntity<Void>( HttpStatus.NO_CONTENT );
 	}
 
