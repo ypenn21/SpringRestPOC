@@ -15,6 +15,8 @@ REDHAT_OPENSHIFT_HOST: https://api.pro-us-east-1.openshift.com
 REDHAT_OPENSHIFT_TOKEN: "..."
 # The OpenShift namespace where applications will be deployed. 
 REDHAT_OPENSHIFT_NAMESPACE: "mynamespace"
+# The OpenShift storage class
+REDHAT_OPENSHIFT_STORAGE_CLASS_NAME: gp2
 
 #######################
 # PostgreSQL defaults #
@@ -61,19 +63,17 @@ SPRINGRESTPOC_DOMAIN_NAME: "example.com"
 # The host name of the site. 
 SPRINGRESTPOC_SITE_HOST_NAME: "springrestpoc-dev.{{SPRINGRESTPOC_DOMAIN_NAME}}"
 # The port of the site. 
-SPRINGRESTPOC_SITE_PORT: "10581"
+SPRINGRESTPOC_SITE_PORT: 8080
 # The base URL of the site. 
 SPRINGRESTPOC_SITE_BASE_URL: "https://{{SPRINGRESTPOC_SITE_HOST_NAME}}:{{SPRINGRESTPOC_SITE_PORT}}"
 # The timezone of the site. 
 SPRINGRESTPOC_SITE_ZONE: "America/Denver"
-# The PostgreSQL database host name of the site. 
-SPRINGRESTPOC_DB_HOST_NAME: "localhost"
 # The PostgreSQL database user name of the site. 
-SPRINGRESTPOC_DB_USER: computate
+SPRINGRESTPOC_DB_USER: "..."
 # The PostgreSQL database password of the site. 
 SPRINGRESTPOC_DB_PASSWORD: "..."
 # The PostgreSQL database name of the site. 
-SPRINGRESTPOC_DB_NAME: springrestpoc
+SPRINGRESTPOC_DB_NAME: "{{ POSTGRES_DB_NAME }}"
 # The backup directory of the site. 
 SPRINGRESTPOC_BACKUP_DIR: /usr/local/src/springrestpoc-static/data/enUS
 # The restore directory of the site. 

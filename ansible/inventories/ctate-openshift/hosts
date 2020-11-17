@@ -2,3 +2,6 @@
 [springrestpoc_openshift]
 localhost
 
+[postgres_openshift]
+localhost
+

@@ -35,50 +35,20 @@ spec:
               name: volume-keystore
               readOnly: true
           env:
-            - name: jdbcHost
+            - name: SPRING_DATASOURCE_URL
               valueFrom:
                 secretKeyRef:
-                  key: jdbcHost
+                  key: SPRINGRESTPOC_DB_URL
                   name: springrestpoc-secret
-            - name: jdbcPort
+            - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef:
-                  key: jdbcPort
+                  key: SPRINGRESTPOC_DB_USER
                   name: springrestpoc-secret
-            - name: jdbcDatabase
+            - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  key: jdbcDatabase
-                  name: springrestpoc-secret
-            - name: jdbcUsername
-              valueFrom:
-                secretKeyRef:
-                  key: jdbcUsername
-                  name: springrestpoc-secret
-            - name: jdbcPassword
-              valueFrom:
-                secretKeyRef:
-                  key: jdbcPassword
-                  name: springrestpoc-secret
-            - name: sslAlias
-              valueFrom:
-                secretKeyRef:
-                  key: sslAlias
-                  name: springrestpoc-secret
-            - name: sslJksPassword
-              valueFrom:
-                secretKeyRef:
-                  key: sslJksPassword
-                  name: springrestpoc-secret
-            - name: sslJksPath
-              valueFrom:
-                secretKeyRef:
-                  key: sslJksPath
-                  name: springrestpoc-secret
-            - name: sslKeystorePath
-              valueFrom:
-                secretKeyRef:
-                  key: sslKeystorePath
+                  key: SPRINGRESTPOC_DB_PASSWORD
                   name: springrestpoc-secret
             - name: siteHostName
               value: "{{SPRINGRESTPOC_SITE_HOST_NAME}}"

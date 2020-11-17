@@ -1,0 +1,8 @@
+---
+- name: Install the Postgres pod on OpenShift
+  hosts: postgres_openshift
+  vars_files: 
+    - "vaults/{{ VAULT_ID }}/vault"
+  roles: 
+    - postgres_openshift
+
