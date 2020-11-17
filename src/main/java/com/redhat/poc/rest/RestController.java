@@ -2,6 +2,8 @@ package com.redhat.poc.rest;
 
 import com.redhat.poc.model.Hat;
 import com.redhat.poc.service.HatService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,7 +19,7 @@ import java.util.List;
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
 
-	// put logic to retrieve, update, create, delete the hats in hat service. Currently below is just a place holder that need to be replaced
+	@Autowired
 	private HatService hatService;
 
 	@GetMapping("/test")
@@ -31,8 +33,8 @@ public class RestController {
 	}
 
 	@PostMapping("/hats")
-	public ResponseEntity createHat(@RequestBody Hat hat){
-		return new ResponseEntity( hat, HttpStatus.CREATED );
+	public ResponseEntity<Hat> createHat(@RequestBody Hat hat){
+		return new ResponseEntity<>( hatService.createHat(hat), HttpStatus.CREATED );
 	}
     
     @PutMapping("/hats/{hatId}")
@@ -42,14 +44,13 @@ public class RestController {
 	}
 
 	@DeleteMapping("/hats/{hatId}")
-	public ResponseEntity updateHat(@PathVariable("hatId") Integer  hatId) {
+	public ResponseEntity<?> deleteHat(@PathVariable("hatId") Integer  hatId) {
 		return new ResponseEntity<Void>( HttpStatus.NO_CONTENT );
 	}
 
 	@GetMapping("/hats")
-	public List<Hat> getAllHats(){
-		List<Hat> hats = new ArrayList<>();
-		return hats;
+	public Iterable<Hat> getAllHats(){
+		return hatService.getHats();
 	}
 
 }

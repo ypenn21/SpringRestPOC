@@ -1,10 +1,22 @@
 package com.redhat.poc.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+
+@Entity
+@Table(name = "hat")
 public class Hat {
 
     String color;
     String type;
-    String descrption;
+    String description;
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     Integer id;
 
     public String getColor() {
@@ -23,12 +35,12 @@ public class Hat {
         this.type = type;
     }
 
-    public String getDescrption() {
-        return descrption;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescrption(String descrption) {
-        this.descrption = descrption;
+    public void setDescription(String descrption) {
+        this.description = descrption;
     }
 
     public Integer getId() {
