@@ -1,0 +1,195 @@
+openapi: 3.0.2
+info:
+  title: SpringRestPOC
+  version: 1.0.0
+  description: |-
+    A sample API that uses a petstore as an example to demonstrate features
+    in the OpenAPI 3.0 specification
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    name: Swagger API Team
+    url: 'http://swagger.io'
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
+servers:
+  - url: 'http://petstore.swagger.io/api'
+paths:
+  /hats:
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Hat'
+              examples:
+                laurent_cats:
+                  value:
+                    - id: 1
+                      color: Red
+                      type: Fedora
+          description: hat response
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unexpected error
+      operationId: getAllHats
+      description: |
+        Returns all hats from the system that the user has access to
+    post:
+      requestBody:
+        description: Hat to add to the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewHat'
+            examples:
+              tigresse:
+                value:
+                  color: Red
+                  type: Fedora
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hat'
+              examples:
+                tigresse:
+                  value:
+                    id: 1
+                    color: Red
+                    type: Fedora
+          description: hat response
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unexpected error
+      operationId: createHat
+      description: Creates a new hat in the store.  Duplicates are allowed
+  '/hats/{id}':
+    get:
+      parameters:
+        - examples:
+            id:
+              value: 1
+          name: id
+          description: ID of hat to fetch
+          schema:
+            format: int32
+          in: path
+          required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hat'
+              examples:
+                zaza:
+                  value:
+                    id: 1
+                    color: Red
+                    type: Fedora
+          description: hat response
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unexpected error
+      operationId: getHat
+      description: Returns a hat based on a single ID
+    put:
+      parameters:
+        - name: id
+          description: ID of pet to update
+          schema:
+            format: int32
+            type: integer
+          in: path
+          required: true
+      responses:
+        '204':
+          description: hat deleted
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unexpected error
+      operationId: delete
+      description: updates a single hat based on the ID supplied
+    delete:
+      parameters:
+        - name: id
+          description: ID of hat to delete
+          schema:
+            format: int32
+            type: integer
+          in: path
+          required: true
+      responses:
+        '204':
+          description: hat deleted
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unexpected error
+      operationId: deleteHat
+      description: deletes a single hat based on the ID supplied
+    parameters:
+      - name: id
+        description: Hat identifier
+        schema:
+          type: integer
+        in: path
+        required: true
+components:
+  schemas:
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          format: int32
+          type: integer
+        message:
+          type: string
+    NewHat:
+      required:
+        - name
+      properties:
+        color:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+    Hat:
+      allOf:
+        - $ref: '#/components/schemas/NewHat'
+        - required:
+            - id
+          properties:
+            id:
+              format: int32
+              type: integer
+            color:
+              type: string
+            type:
+              type: string
+            description:
+              type: string
