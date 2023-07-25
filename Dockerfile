@@ -28,7 +28,7 @@ ENV JAVA_OPTIONS -Xmx512m
 #     chmod -R g=u /opt/app-root && \
 #     chmod +x /opt/app-root/bin/run
 
-COPY  ./target/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar /opt/app-root/app.jar
+COPY ./target/demo-0.0.1-SNAPSHOT.jar  /opt/app-root/app.jar
 EXPOSE 8080
 # This default user is created in the openshift/base-centos7 image
 USER 1001
