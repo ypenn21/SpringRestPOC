@@ -24,8 +24,6 @@ ENV JAVA_OPTIONS -Xmx512m
 # sets io.openshift.s2i.scripts-url label that way, or update that label
 
 # TODO: Drop the root user and make the content of /opt/app-root owned by user 1001
-COPY s2i/bin/run /opt/app-root/bin/run
-                 #/opt/app-root/bin/run
 RUN  chgrp -R 0 /opt/app-root && \
      chmod -R g=u /opt/app-root && \
      chmod +x /opt/app-root/bin/run
