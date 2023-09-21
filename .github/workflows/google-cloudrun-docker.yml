@@ -47,6 +47,12 @@ on:
   push:
     branches:
       - master
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: false
+        default: 'warning'
 
 env:
   PROJECT_ID: "edge-retail-374401"
