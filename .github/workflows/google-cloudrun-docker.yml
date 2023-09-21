@@ -58,7 +58,7 @@ env:
   PROJECT_ID: "edge-retail-374401"
   GAR_LOCATION: "us-central1"
   REPOSITORY: "applications"
-  SERVICE: "spring-poc-rest"
+  SERVICE: "spring-poc-crac"
   REGION: "us-central1"
 
 jobs:
@@ -100,12 +100,17 @@ jobs:
           username: _json_key
           password: ${{ secrets.SA_CREDS }}
       - name: Run build script
-        run: ./mvnw package -DskipTests
+        run: |-
+          cd /opt
+          curl -s -L https://cdn.azul.com/zulu/bin/zulu17.44.17-ca-crac-jdk17.0.8-linux_x64.tar.gz | tar xz
+          mv zulu* jdk
+          export PATH=/opt/jdk/bin:$$PATH
+          ./checkpoint.sh
         shell: bash
         
       - name: Build and Push Container
         run: |-
-          docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:${{ github.sha }}" ./
+          docker tag sdeleuze/spring-boot-crac-demo:checkpoint "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:${{ github.sha }}" ./
           docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:${{ github.sha }}"
 
       # END - Docker auth and build
